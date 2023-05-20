@@ -60,4 +60,4 @@ jobs:
           generateReleaseNotes: true
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
-          artifacts: "build/*"
+          artifacts: "*.apk"
