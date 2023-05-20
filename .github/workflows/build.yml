@@ -52,12 +52,6 @@ jobs:
             version: ${{ steps.tag_version.outputs.new_tag }}
             targetPlatform: Android
 
-      # Upload Build
-      - uses: actions/upload-artifact@v2
-        with:
-            name: Build
-            path: build
-
       # Create Release
       - uses: ncipollo/release-action@v1
         with:
