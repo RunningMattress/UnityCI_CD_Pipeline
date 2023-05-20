@@ -30,22 +30,6 @@ jobs:
         with:
           name: Test results
           path: artifacts
-      
-      # Build
-      - uses: game-ci/unity-builder@v2
-        env:
-            UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-            UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-            UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-            projectPath: "Unity CI CD"
-            targetPlatform: Android
-
-      # Upload Build
-      - uses: actions/upload-artifact@v2
-        with:
-            name: Build
-            path: build
 
       # Tag
       - name: Bump version and push tag
@@ -54,6 +38,25 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_branches: main
+
+      # Build
+      - uses: game-ci/unity-builder@v2
+        env:
+            UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+            UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+            UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+            projectPath: "Unity CI CD"
+            buildsPath: "build"
+            versioning: Custom
+            version: ${{ steps.tag_version.outputs.new_tag }}
+            targetPlatform: Android
+
+      # Upload Build
+      - uses: actions/upload-artifact@v2
+        with:
+            name: Build
+            path: build
 
       # Create Release
       - uses: ncipollo/release-action@v1
