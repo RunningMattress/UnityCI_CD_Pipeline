@@ -1,0 +1,16 @@
+name: Test project
+
+#Run on anything that doesn't have .cs or .yml files
+on:
+    pull_request:
+      paths-ignore:
+        - '**.cs'
+        - '**.yml'
+        - '**.json'
+
+jobs:
+    build:
+        name: PR Check
+        runs-on: ubuntu-latest
+        steps:
+        - run: 'echo "No build required"'
